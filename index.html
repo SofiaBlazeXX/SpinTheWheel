@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin to Win</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ff4e50, #f9d423);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }.wheel-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 8px solid #fff;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
+  transform: rotate(0deg);
+  transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.segment {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  background-color: rgba(0,0,0,0.1);
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.spin-btn {
+  margin-top: 30px;
+  padding: 15px 30px;
+  background: #fff;
+  color: #ff4e50;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pay-btn {
+  display: none;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #fff;
+  color: #ff4e50;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="wheel-container">
+    <svg class="wheel" id="wheel" viewBox="0 0 100 100">
+      <!-- Will insert slices with JS -->
+    </svg>
+  </div>
+  <button class="spin-btn" onclick="spinWheel()">SPIN NOW</button>
+  <a href="upi://pay?pa=keanjohn72@oksbi&pn=Spin%20to%20Win&cu=INR&am=199" class="pay-btn" id="payButton" target="_blank">PAY ₹199 TO SPIN AGAIN</a>  <script>
+    const wheel = document.getElementById('wheel');
+    const payButton = document.getElementById('payButton');
+    const options = [
+      'Private Video',
+      'Spend a Night',
+      'Secret Photo',
+      'Call Me',
+      'One-on-One Chat',
+      'DM Me',
+      'Date Tonight',
+      'Spin Again & Pay ₹199'
+    ];
+
+    const sliceAngle = 360 / options.length;
+    options.forEach((text, i) => {
+      const slice = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const startAngle = sliceAngle * i;
+      const endAngle = startAngle + sliceAngle;
+      const x1 = 50 + 50 * Math.cos((Math.PI / 180) * startAngle);
+      const y1 = 50 + 50 * Math.sin((Math.PI / 180) * startAngle);
+      const x2 = 50 + 50 * Math.cos((Math.PI / 180) * endAngle);
+      const y2 = 50 + 50 * Math.sin((Math.PI / 180) * endAngle);
+      const largeArc = sliceAngle > 180 ? 1 : 0;
+      slice.setAttribute('d', `M50,50 L${x1},${y1} A50,50 0 ${largeArc},1 ${x2},${y2} Z`);
+      slice.setAttribute('fill', `hsl(${i * 45}, 80%, 60%)`);
+      wheel.appendChild(slice);
+    });
+
+    let currentAngle = 0;
+
+    function spinWheel() {
+      const spins = 5;
+      const landingAngle = 360 - (360 / options.length) * 7.5; // Always land on last slice
+      const totalAngle = spins * 360 + landingAngle;
+      currentAngle += totalAngle;
+      wheel.style.transform = `rotate(${currentAngle}deg)`;
+      setTimeout(() => {
+        payButton.style.display = 'inline-block';
+      }, 4000);
+    }
+  </script></body>
+</html>
