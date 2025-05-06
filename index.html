@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin for a Chance with Sofia</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle, #ffdde1, #ee9ca7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      color: #fff;
+    }.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 4px #000;
+}
+
+.wheel-container {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 10px solid #fff;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0,0,0,0.5);
+  background-image: url('https://i.imgur.com/Qy8YVhL.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.pointer {
+  width: 0; 
+  height: 0; 
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 30px solid #fff;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.spin-btn {
+  margin-top: 40px;
+  padding: 15px 35px;
+  background: #fff;
+  color: #ee4c7c;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.spin-btn:hover {
+  transform: scale(1.05);
+}
+
+.pay-btn {
+  display: none;
+  margin-top: 25px;
+  padding: 12px 28px;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-shadow: 0 0 5px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+  </style>
+</head>
+<body>
+  <div class="title">Spin for a Chance with Sofia</div>
+  <div class="pointer"></div>
+  <div class="wheel-container" id="wheel"></div>
+  <button class="spin-btn" onclick="spinWheel()">SPIN NOW</button>
+  <button class="pay-btn" id="payButton" onclick="openUPILink()">PAY ₹199 TO SPIN AGAIN</button>  <script>
+    const wheel = document.getElementById('wheel');
+    const payButton = document.getElementById('payButton');
+
+    const outcomes = [
+      'DM Sofia',
+      'Secret Pic',
+      'Call Tonight',
+      'Private Chat',
+      'Spin Again',
+      'Almost There!',
+      'Lucky Wink',
+      'Spin Again'
+    ];
+
+    let isSpinning = false;
+
+    function createWheel() {
+      const centerX = 160, centerY = 160, radius = 150;
+      const angleStep = 360 / outcomes.length;
+
+      for (let i = 0; i < outcomes.length; i++) {
+        const angle = angleStep * i;
+        const segment = document.createElement('div');
+        segment.style.position = 'absolute';
+        segment.style.width = '100%';
+        segment.style.height = '100%';
+        segment.style.transform = `rotate(${angle}deg)`;
+        segment.style.clipPath = 'polygon(50% 50%, 100% 0, 100% 100%)';
+        segment.style.backgroundColor = `hsl(${i * 45}, 70%, 60%)`;
+        wheel.appendChild(segment);
+      }
+    }
+
+    function spinWheel() {
+      if (isSpinning) return;
+      isSpinning = true;
+      const spinDegrees = 1440 + (360 - (360 / outcomes.length) * 1);
+      wheel.style.transition = 'transform 4s cubic-bezier(0.33, 1, 0.68, 1)';
+      wheel.style.transform = `rotate(${spinDegrees}deg)`;
+
+      setTimeout(() => {
+        payButton.style.display = 'inline-block';
+        isSpinning = false;
+      }, 4000);
+    }
+
+    function openUPILink() {
+      window.location.href = 'upi://pay?pa=keanjohn72@oksbi&pn=Sofia&am=199&cu=INR';
+    }
+
+    createWheel();
+  </script></body>
+</html>
