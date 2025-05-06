@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin for a Chance with Sofia Cruz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1a001a, #330033);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      padding: 40px 20px 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.7rem;
+      margin-bottom: 0.3rem;
+      color: #ff69b4;
+    }
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    .spin-area {
+      margin-top: 30px;
+      text-align: center;
+    }
+    #wheel {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: url('https://i.imgur.com/IT4sRzo.png') no-repeat center/cover;
+      border: 10px solid #ff69b4;
+      box-shadow: 0 0 30px hotpink;
+      margin: auto;
+      transition: transform 4s ease-out;
+    }
+    #spinBtn, #payConfirmBtn {
+      margin-top: 30px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      border: none;
+      background-color: hotpink;
+      color: black;
+      cursor: pointer;
+      box-shadow: 0 0 20px hotpink;
+    }
+    #upiDiv {
+      display: none;
+      margin-top: 30px;
+      text-align: center;
+    }
+    #upiDiv img {
+      width: 250px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px pink;
+    }
+    .note {
+      font-size: 0.9rem;
+      margin-top: 15px;
+      opacity: 0.8;
+    }
+    #result {
+      margin-top: 25px;
+      font-size: 1.3rem;
+      color: #ff69b4;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1000px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Spin to Win a Night with Sofia Cruz</h1>
+    <p>Just ₹199 for a chance to meet the most seductive mystery girl online.</p>
+  </header>  <div class="spin-area">
+    <div id="wheel"></div>
+    <button id="spinBtn">Pay ₹199 & Spin</button>
+  </div>  <div id="upiDiv">
+    <img src="https://i.imgur.com/xR2Fdv3.png" alt="UPI QR Code">
+    <p>Scan & Pay ₹199 to <strong>keanjohn72@oksbi</strong></p>
+    <a href="upi://pay?pa=keanjohn72@oksbi&pn=SpinGame&am=199&cu=INR" style="color: hotpink; text-decoration: underline; display: block; margin-top: 10px;">Click to open Google Pay</a>
+    <button id="payConfirmBtn">I Paid, Spin Now</button>
+  </div>  <div class="note">1 spin = ₹199 | Limited winners per day | No refunds</div>
+  <div id="result"></div>  <section class="gallery">
+    <img src="https://i.imgur.com/kMT9XlK.jpg" alt="Tease 1">
+    <img src="https://i.imgur.com/qOlPUU1.jpg" alt="Tease 2">
+    <img src="https://i.imgur.com/k5QHntz.jpg" alt="Tease 3">
+    <img src="https://i.imgur.com/LkD2U3U.jpg" alt="Tease 4">
+  </section>  <footer>
+    This is a fun & fantasy entertainment experience only. Payments are final. DM your proof after spin.
+  </footer>  <script>
+    const spinBtn = document.getElementById("spinBtn");
+    const upiDiv = document.getElementById("upiDiv");
+    const wheel = document.getElementById("wheel");
+    const result = document.getElementById("result");
+    const payConfirmBtn = document.getElementById("payConfirmBtn");
+
+    spinBtn.onclick = () => {
+      spinBtn.style.display = "none";
+      upiDiv.style.display = "block";
+    };
+
+    payConfirmBtn.onclick = () => {
+      const angle = 3600 + Math.floor(Math.random() * 720);
+      wheel.style.transform = `rotate(${angle}deg)`;
+      result.textContent = "Spinning...";
+      setTimeout(() => {
+        const win = Math.random() < 0.2;
+        result.innerHTML = win
+          ? '<strong>OMG! You Won!</strong> Screenshot & DM now for your private link.'
+          : 'So close! Try again — your lucky spin is waiting.';
+      }, 4500);
+    };
+  </script></body>
+</html>
